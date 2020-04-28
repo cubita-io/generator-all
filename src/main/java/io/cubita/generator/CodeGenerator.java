@@ -37,25 +37,15 @@ public class CodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger("CodeGenerator");
 
     public static void main(String[] args) {
-//        String projectPath = System.getProperty("projectPath");
-////        String moudleName = System.getProperty("moudleName");
-//        String database = System.getProperty("database");
-//        String pkgName = System.getProperty("pkgName");
-//        String tablePrefix = System.getProperty("tablePrefix", "");
-//        String host = System.getProperty("host");
-//        String port = System.getProperty("port");
-//        String userName = System.getProperty("userName");
-//        String userPwd = System.getProperty("userPwd");
-//        String likeTable = System.getProperty("likeTable");
-
-        String projectPath = System.getProperty("projectPath", "/Users/apple/Documents/workspace/java/cubita/generator-all/dao");
-        String database = System.getProperty("database", "saas_depository");
-        String pkgName = System.getProperty("pkgName", "com.lunz.fin.fd.depository");
-        String tablePrefix = System.getProperty("tablePrefix", "tb_");
-        String host = System.getProperty("host", "rm-bp1oydriw2vi7fc68qo.mysql.rds.aliyuncs.com");
-        String port = System.getProperty("port", "3306");
-        String userName = System.getProperty("userName", "user_depos");
-        String userPwd = System.getProperty("userPwd", "Lunz2017");
+        String projectPath = System.getProperty("projectPath");
+//        String moudleName = System.getProperty("moudleName");
+        String database = System.getProperty("database");
+        String pkgName = System.getProperty("pkgName");
+        String tablePrefix = System.getProperty("tablePrefix", "");
+        String host = System.getProperty("host");
+        String port = System.getProperty("port");
+        String userName = System.getProperty("userName");
+        String userPwd = System.getProperty("userPwd");
         String likeTable = System.getProperty("likeTable");
 
         boolean resXml = Boolean.parseBoolean(System.getProperty("resXml", "false"));
