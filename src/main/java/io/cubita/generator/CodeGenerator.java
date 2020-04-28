@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.INameConvert;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.LikeTable;
@@ -25,6 +26,7 @@ import static com.baomidou.mybatisplus.core.enums.SqlLike.RIGHT;
 
 /**
  * <p>
+ *     java -DprojectPath=$(pwd)/depository-dao -Dhost=rm-bp1oydriw2vi7fc68qo.mysql.rds.aliyuncs.com -Dport=3306 -DuserName=user_depos -DuserPwd=Lunz2017 -Ddatabase=saas_depository -DpkgName=com.lunz.fin.fd.depository -DtablePrefix=tb_ -DresXml=true -jar tools/generator-all-3.3.1.jar
  * </p>
  *
  * @author jiawei
@@ -35,17 +37,29 @@ public class CodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger("CodeGenerator");
 
     public static void main(String[] args) {
-        String projectPath = System.getProperty("projectPath");
-//        String moudleName = System.getProperty("moudleName");
-        String database = System.getProperty("database");
-        String pkgName = System.getProperty("pkgName");
-        String tablePrefix = System.getProperty("tablePrefix");
-        String host = System.getProperty("host");
-        String port = System.getProperty("port");
-        String userName = System.getProperty("userName");
-        String userPwd = System.getProperty("userPwd");
+//        String projectPath = System.getProperty("projectPath");
+////        String moudleName = System.getProperty("moudleName");
+//        String database = System.getProperty("database");
+//        String pkgName = System.getProperty("pkgName");
+//        String tablePrefix = System.getProperty("tablePrefix", "");
+//        String host = System.getProperty("host");
+//        String port = System.getProperty("port");
+//        String userName = System.getProperty("userName");
+//        String userPwd = System.getProperty("userPwd");
+//        String likeTable = System.getProperty("likeTable");
+
+        String projectPath = System.getProperty("projectPath", "/Users/apple/Documents/workspace/java/cubita/generator-all/dao");
+        String database = System.getProperty("database", "saas_depository");
+        String pkgName = System.getProperty("pkgName", "com.lunz.fin.fd.depository");
+        String tablePrefix = System.getProperty("tablePrefix", "tb_");
+        String host = System.getProperty("host", "rm-bp1oydriw2vi7fc68qo.mysql.rds.aliyuncs.com");
+        String port = System.getProperty("port", "3306");
+        String userName = System.getProperty("userName", "user_depos");
+        String userPwd = System.getProperty("userPwd", "Lunz2017");
         String likeTable = System.getProperty("likeTable");
+
         boolean resXml = Boolean.parseBoolean(System.getProperty("resXml", "false"));
+
 
         String help = "-DprojectPath=? -DmoudleName=? -Ddatabase=? -DpkgName=? -DlikeTable=? -DtablePrefix=* -Dhost=127.0.0.1 -Dport=3306 -DuserName=root -DuserPwd=123456 -DresXml=false";
 
@@ -150,6 +164,7 @@ public class CodeGenerator {
         }
 
         StrategyConfig strategy = new StrategyConfig();
+        INameConvert nameConvert = new CustomNameConvert(strategy);
 
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
@@ -157,11 +172,13 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);
 
         if (StringUtils.hasText(tablePrefix)) {
-            strategy.setTablePrefix(tablePrefix);
+            strategy.setTablePrefix(tablePrefix.split(","));
         }
         if (StringUtils.hasText(likeTable)) {
             strategy.setLikeTable(new LikeTable(likeTable, RIGHT));
         }
+
+        strategy.setNameConvert(nameConvert);
         mpg.setStrategy(strategy);
 
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
