@@ -46,12 +46,13 @@ public class CodeGenerator {
         String port = System.getProperty("port");
         String userName = System.getProperty("userName");
         String userPwd = System.getProperty("userPwd");
+        String logicDeletedColumn = System.getProperty("logicDeletedColumn");
         String likeTable = System.getProperty("likeTable");
 
         boolean resXml = Boolean.parseBoolean(System.getProperty("resXml", "false"));
 
 
-        String help = "-DprojectPath=? -DmoudleName=? -Ddatabase=? -DpkgName=? -DlikeTable=? -DtablePrefix=* -Dhost=127.0.0.1 -Dport=3306 -DuserName=root -DuserPwd=123456 -DresXml=false";
+        String help = "-DprojectPath=? -DmoudleName=? -Ddatabase=? -DpkgName=? -DlikeTable=? -DtablePrefix=* -Dhost=127.0.0.1 -Dport=3306 -DuserName=root -DuserPwd=123456 -DresXml=false -DlogicDeletedColumn=?";
 
         if (!StringUtils.hasText(projectPath)) {
             logger.warn("请配置projectPath");
@@ -162,6 +163,9 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setRestControllerStyle(true);
         strategy.setControllerMappingHyphenStyle(true);
+        if (StringUtils.hasText(logicDeletedColumn)) {
+            strategy.setLogicDeleteFieldName(logicDeletedColumn);
+        }
 
         if (StringUtils.hasText(tablePrefix)) {
             strategy.setTablePrefix(tablePrefix.split(","));
